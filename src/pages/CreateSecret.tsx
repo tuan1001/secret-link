@@ -6,7 +6,7 @@ const CreateSecret: React.FC = () => {
   const [link, setLink] = useState("");
 
   const createSecret = async () => {
-    const res = await fetch("http://localhost:4000/api/create", {
+    const res = await fetch("/api/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ secret, password }),

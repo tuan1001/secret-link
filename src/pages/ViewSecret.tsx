@@ -10,7 +10,7 @@ const ViewSecret: React.FC = () => {
 
   const viewSecret = async () => {
     try {
-      const res = await fetch(`http://localhost:4000/api/view/${token}`, {
+      const res = await fetch(`/api/view/${token}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),
