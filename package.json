@@ -4,10 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "ts-node src/server/server.ts",
+    "build": "tsc",
+    "start": "node dist/server/server.js",
     "lint": "eslint .",
     "preview": "vite preview"
+    
   },
   "dependencies": {
     "body-parser": "^2.2.0",
