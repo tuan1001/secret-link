@@ -5,15 +5,41 @@ const CreateSecret: React.FC = () => {
   const [password, setPassword] = useState("");
   const [link, setLink] = useState("");
 
-  const createSecret = async () => {
+const createSecret = async () => {
+  try {
     const res = await fetch("/api/create", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ secret, password }),
     });
-    const data = await res.json();
+
+    // ❗ check HTTP status
+    if (!res.ok) {
+      throw new Error(`Server error: ${res.status}`);
+    }
+
+    // ❗ đọc text trước để tránh crash
+    const text = await res.text();
+
+    if (!text) {
+      throw new Error("Empty response from server");
+    }
+
+    const data = JSON.parse(text);
+
+    // ❗ check data hợp lệ
+    if (!data.link) {
+      throw new Error("Invalid response: missing link");
+    }
+
     setLink(data.link);
-  };
+  } catch (err) {
+    console.error("Create secret error:", err);
+    alert("Có lỗi xảy ra khi tạo secret ❗");
+  }
+};
 
   return (
     
