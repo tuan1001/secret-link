@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 import secretRoutes from "./routes/secret.route";
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = parseInt(process.env.PORT || "4000", 10);
 
 app.use(cors());
 app.use(express.json());
@@ -23,6 +23,6 @@ app.get(/^\/(?!api).*/, (_req, res) => {
   res.sendFile(path.join(__dirname, "../../dist/index.html"));
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on ${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 Server running on port ${PORT}`);
 });
