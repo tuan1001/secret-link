@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
-import secretRoutes from "./routes/secret.route";
+import secretRoutes from "./routes/secret.route.js";
 
 const app = express();
 const PORT = parseInt(process.env.PORT || "4000", 10);

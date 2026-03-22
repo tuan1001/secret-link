@@ -1,5 +1,5 @@
 import express from "express";
-import { createSecret, viewSecret } from "../services/secret.service";
+import { createSecret, viewSecret } from "../services/secret.service.js";
 
 const router = express.Router();
 

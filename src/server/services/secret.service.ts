@@ -1,4 +1,4 @@
-import type { SecretData } from "../models/secret.model";
+import type { SecretData } from "../models/secret.model.js";
 import { v4 as uuidv4 } from "uuid";
 
 const store: Record<string, SecretData> = {};
