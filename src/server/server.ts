@@ -6,20 +6,23 @@ import secretRoutes from "./routes/secret.route.js";
 
 const app = express();
 const PORT = parseInt(process.env.PORT || "4000", 10);
+const BASE_PATH = process.env.BASE_PATH || "/secret";
 
 app.use(cors());
 app.use(express.json());
-
-// API
-app.use("/api", secretRoutes);
 
 // static
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(express.static(path.join(__dirname, "../../dist")));
+// API
+app.use(`${BASE_PATH}/api`, secretRoutes);
 
-app.get(/^\/(?!api).*/, (_req, res) => {
+// static files
+app.use(BASE_PATH, express.static(path.join(__dirname, "../../dist")));
+
+// SPA fallback
+app.get(`${BASE_PATH}/*`, (_req, res) => {
   res.sendFile(path.join(__dirname, "../../dist/index.html"));
 });
 

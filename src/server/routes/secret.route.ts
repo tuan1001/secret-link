@@ -9,11 +9,7 @@ router.post("/create", (req, res) => {
 
     const token = createSecret(secret, password);
 
-    const baseUrl = `${req.protocol}://${req.get("host")}`;
-
-    res.json({
-      link: `${baseUrl}/view/${token}`,
-    });
+    res.json({ token });
   } catch (err: any) {
     res.status(400).json({ error: err.message });
   }

@@ -7,7 +7,7 @@ const CreateSecret: React.FC = () => {
 
 const createSecret = async () => {
   try {
-    const res = await fetch("/api/create", {
+    const res = await fetch(`${import.meta.env.BASE_URL}api/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,7 +34,8 @@ const createSecret = async () => {
       throw new Error("Invalid response: missing link");
     }
 
-    setLink(data.link);
+    const fullLink = `${window.location.origin}${import.meta.env.BASE_URL}view/${data.token}`;
+    setLink(fullLink);
   } catch (err) {
     console.error("Create secret error:", err);
     alert("Có lỗi xảy ra khi tạo secret ❗");
@@ -47,7 +48,7 @@ const createSecret = async () => {
       <div className="card shadow p-4 w-100" style={{ maxWidth: "500px" }}>
         {/* Logo */}
         <div className="text-center mb-3">
-          <img src="/Logo.png" alt="logo" style={{ height: 50 }} />
+          <img src={`${import.meta.env.BASE_URL}Logo.png`} alt="logo" style={{ height: 50 }} />
         </div>
 
         {/* Tiêu đề */}

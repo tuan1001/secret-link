@@ -10,7 +10,7 @@ const ViewSecret: React.FC = () => {
 
   const viewSecret = async () => {
     try {
-      const res = await fetch(`/api/view/${token}`, {
+      const res = await fetch(`${import.meta.env.BASE_URL}api/view/${token}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),
@@ -36,7 +36,7 @@ const ViewSecret: React.FC = () => {
       {/* Header navbar */}
       <div style={{ background: "#f9cd55", padding: "10px 20px" }}>
         <div className="d-flex justify-content-center align-items-center">
-          <img src="/logo1.png" alt="msc" style={{ height: 50 }} />
+          <img src={`${import.meta.env.BASE_URL}logo1.png`} alt="msc" style={{ height: 50 }} />
         </div>
       </div>
 
@@ -44,7 +44,7 @@ const ViewSecret: React.FC = () => {
       <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: "80vh" }}>
         <div className="card shadow p-4 w-100" style={{ maxWidth: "500px" }}>
           <div className="text-center mb-3">
-            <img src="/Logo.png" alt="msc" style={{ height: 40 }} />
+            <img src={`${import.meta.env.BASE_URL}Logo.png`} alt="msc" style={{ height: 40 }} />
             <h5 className="mt-3">You have received the following secret</h5>
           </div>
           <hr style={{ width: "100%", margin: "1rem auto", borderColor: "#8d8888ff" }} />
