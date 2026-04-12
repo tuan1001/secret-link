@@ -3,6 +3,7 @@ import React, { useState } from "react";
 const CreateSecret: React.FC = () => {
   const [secret, setSecret] = useState("");
   const [password, setPassword] = useState("");
+  const [maxViews, setMaxViews] = useState(3);
   const [link, setLink] = useState("");
 
 const createSecret = async () => {
@@ -12,7 +13,7 @@ const createSecret = async () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ secret, password }),
+      body: JSON.stringify({ secret, password, maxViews }),
     });
 
     // ❗ check HTTP status
@@ -30,8 +31,8 @@ const createSecret = async () => {
     const data = JSON.parse(text);
 
     // ❗ check data hợp lệ
-    if (!data.link) {
-      throw new Error("Invalid response: missing link");
+    if (!data.token) {
+      throw new Error("Invalid response: missing token");
     }
 
     const fullLink = `${window.location.origin}${import.meta.env.BASE_URL}view/${data.token}`;
@@ -90,6 +91,19 @@ const createSecret = async () => {
             <i className="fa fa-lock me-2" />
             Create link
           </button>
+        </div>
+
+        {/* Số lần xem tối đa */}
+        <div className="mb-3">
+          <label className="form-label small fw-semibold">Max views allowed</label>
+          <input
+            type="number"
+            className="form-control"
+            min={1}
+            max={100}
+            value={maxViews}
+            onChange={(e) => setMaxViews(Math.max(1, Math.min(100, parseInt(e.target.value) || 1)))}
+          />
         </div>
 
         {/* Ghi chú */}

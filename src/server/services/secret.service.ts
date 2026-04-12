@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const store: Record<string, SecretData> = {};
 
-export const createSecret = (secret: string, password: string) => {
+export const createSecret = (secret: string, password: string, maxViews: number = 3) => {
   const token = uuidv4();
 
   store[token] = {
@@ -11,6 +11,7 @@ export const createSecret = (secret: string, password: string) => {
     password,
     attempts: 0,
     views: 0,
+    maxViews,
   };
 
   return token;
@@ -33,21 +34,21 @@ export const viewSecret = (token: string, password: string) => {
     throw new Error(`❌ Sai mật khẩu (${data.attempts}/3)`);
   }
 
-  if (data.views >= 3) {
+  if (data.views >= data.maxViews) {
     delete store[token];
-    throw new Error("❌ Đã xem quá 3 lần");
+    throw new Error(`❌ Đã xem quá ${data.maxViews} lần`);
   }
 
   data.views += 1;
 
   const secret = data.secret;
 
-  if (data.views >= 3) {
+  if (data.views >= data.maxViews) {
     delete store[token];
   }
 
   return {
     secret,
-    viewsLeft: 3 - data.views,
+    viewsLeft: data.maxViews - data.views,
   };
 };

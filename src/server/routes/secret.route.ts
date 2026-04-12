@@ -5,9 +5,10 @@ const router = express.Router();
 
 router.post("/create", (req, res) => {
   try {
-    const { secret, password } = req.body;
+    const { secret, password, maxViews } = req.body;
+    const parsedMaxViews = Math.max(1, Math.min(100, parseInt(maxViews) || 3));
 
-    const token = createSecret(secret, password);
+    const token = createSecret(secret, password, parsedMaxViews);
 
     res.json({ token });
   } catch (err: any) {

@@ -6,6 +6,7 @@ const ViewSecret: React.FC = () => {
 
   const [password, setPassword] = useState("");
   const [secret, setSecret] = useState("");
+  const [viewsLeft, setViewsLeft] = useState<number | null>(null);
   const [error, setError] = useState("");
 
   const viewSecret = async () => {
@@ -21,8 +22,10 @@ const ViewSecret: React.FC = () => {
       if (!res.ok) {
         setError(data.error || "Unknown error");
         setSecret("");
+        setViewsLeft(null);
       } else {
         setSecret(data.secret);
+        setViewsLeft(data.viewsLeft);
         setError("");
       }
     } catch (err) {
@@ -36,7 +39,7 @@ const ViewSecret: React.FC = () => {
       {/* Header navbar */}
       <div style={{ background: "#f9cd55", padding: "10px 20px" }}>
         <div className="d-flex justify-content-center align-items-center">
-          <img src={`${import.meta.env.BASE_URL}logo1.png`} alt="msc" style={{ height: 50 }} />
+          <img src={`${import.meta.env.BASE_URL}logo2.png`} alt="msc" style={{ height: 50 }} />
         </div>
       </div>
 
@@ -76,6 +79,17 @@ const ViewSecret: React.FC = () => {
      
           {error && <div className="alert alert-danger mt-3">{error}</div>}
           {secret && (
+            <>
+            {viewsLeft !== null && viewsLeft > 0 && (
+              <div className="alert alert-info small mt-3">
+                This secret can be viewed <strong>{viewsLeft}</strong> more time{viewsLeft !== 1 ? "s" : ""}.
+              </div>
+            )}
+            {viewsLeft === 0 && (
+              <div className="alert alert-warning small mt-3">
+                This was the <strong>last</strong> view. The secret has been deleted.
+              </div>
+            )}
             <div className="position-relative">
               <pre
                 className="bg-light border rounded p-3"
@@ -97,6 +111,7 @@ const ViewSecret: React.FC = () => {
                 Copy
               </button>
             </div>
+            </>
           )}
 
           <div className="alert alert-warning mt-4 small">

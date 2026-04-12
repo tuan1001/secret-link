@@ -3,4 +3,5 @@ export interface SecretData {
   password: string;
   attempts: number;
   views: number;
+  maxViews: number;
 }

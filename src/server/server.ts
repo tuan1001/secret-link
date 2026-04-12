@@ -22,7 +22,7 @@ app.use(`${BASE_PATH}/api`, secretRoutes);
 app.use(BASE_PATH, express.static(path.join(__dirname, "../../dist")));
 
 // SPA fallback
-app.get(`${BASE_PATH}/*`, (_req, res) => {
+app.get(`${BASE_PATH}/*splat`, (_req, res) => {
   res.sendFile(path.join(__dirname, "../../dist/index.html"));
 });
 
