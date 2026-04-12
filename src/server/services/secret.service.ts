@@ -21,22 +21,22 @@ export const viewSecret = (token: string, password: string) => {
   const data = store[token];
 
   if (!data) {
-    throw new Error("⛔ Secret không tồn tại");
+    throw new Error("⛔ Secret expired or not found");
   }
 
   if (data.attempts >= 3) {
     delete store[token];
-    throw new Error("❌ Quá 3 lần nhập sai");
+    throw new Error("❌ Too many incorrect attempts");
   }
 
   if (data.password !== password) {
     data.attempts += 1;
-    throw new Error(`❌ Sai mật khẩu (${data.attempts}/3)`);
+    throw new Error(`❌ Incorrect password (${data.attempts}/3)`);
   }
 
   if (data.views >= data.maxViews) {
     delete store[token];
-    throw new Error(`❌ Đã xem quá ${data.maxViews} lần`);
+    throw new Error(`❌ Exceeded ${data.maxViews} views`);
   }
 
   data.views += 1;
